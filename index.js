@@ -1,6 +1,13 @@
 export class PrimitiveGate{
     constructor(...inputs){
-        if(inputs[0] instanceof Array) inputs = inputs[0];
+        if(inputs[0] instanceof Array){
+            let out = [];
+            for(let i = 0; i < inputs[0].length; i++){
+                out.push(new this.constructor(...inputs.map(v=>v[i])));
+            }
+            return out;
+        }
+        //if(inputs[0] instanceof Array) inputs = inputs[0];
         this.inputs = inputs;
         for(let input of inputs){
             input.connect(this);
